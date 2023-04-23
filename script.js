@@ -44,7 +44,8 @@ function getInput(searchInput) {
       console.log(response);
       return response.json();
     })
-    .then((response) => (searchedImg.src = response.data.images.original.url));
+    .then((response) => (searchedImg.src = response.data.images.original.url))
+    .catch((error) => console.error(error));
 }
 
 searchBtn.addEventListener("click", () => {

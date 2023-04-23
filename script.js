@@ -13,44 +13,26 @@ fetch(
     img.src = response.data.images.original.url;
   });
 
-// dogBtn.addEventListener("click", () => {
-//   fetch(
-//     "https://api.giphy.com/v1/gifs/translate?api_key=7xX8bIMXFLppXyF7Kk7gpIM95xIHnZQK&s=dogs",
-//     { mode: "cors" }
-//   )
-//     .then(function (response) {
-//       return response.json();
-//     })
-//     .then(function (response) {
-//       dogs.src = response.data.images.original.url;
-//     });
-// });
-
-// on search button
-// get an input from the search bar, get the value
-// concatenate the value into the url
-// and repeat what i did
-
 const searchBtn = document.querySelector(".search-btn");
-// get the data by calling API ?
 const searchedImg = document.querySelector(".searched-img");
 const searchBar = document.querySelector("input");
 
-function getInput(searchInput) {
+// async function to wrap our API call to Giphy!
+async function getGiphy(searchInput) {
   const URL = `https://api.giphy.com/v1/gifs/translate?api_key=7xX8bIMXFLppXyF7Kk7gpIM95xIHnZQK&s=${searchInput}`;
+  // refactor to use await
+  // wait until i fetch this thing! then i assign it to 'response'!
+  const response = await fetch(URL, { mode: "cors" });
 
-  fetch(URL, { mode: "cors" })
-    .then((response) => {
-      console.log(response);
-      return response.json();
-    })
-    .then((response) => (searchedImg.src = response.data.images.original.url))
-    .catch((error) => console.error(error));
+  //json() returns a promise. Takes some time!
+  // if json() returns a promise, i can use await to assign the response to a variable.
+  const giphyData = await response.json();
+  searchedImg.src = giphyData.data.images.original.url;
 }
 
 searchBtn.addEventListener("click", () => {
   const searchInput = document.querySelector("input").value;
-  getInput(searchInput);
+  getGiphy(searchInput);
 });
 
 searchBar.addEventListener("keypress", (e) => {

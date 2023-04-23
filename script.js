@@ -34,6 +34,7 @@ fetch(
 const searchBtn = document.querySelector(".search-btn");
 // get the data by calling API ?
 const searchedImg = document.querySelector(".searched-img");
+const searchBar = document.querySelector("input");
 
 function getInput(searchInput) {
   const URL = `https://api.giphy.com/v1/gifs/translate?api_key=7xX8bIMXFLppXyF7Kk7gpIM95xIHnZQK&s=${searchInput}`;
@@ -49,4 +50,11 @@ function getInput(searchInput) {
 searchBtn.addEventListener("click", () => {
   const searchInput = document.querySelector("input").value;
   getInput(searchInput);
+});
+
+searchBar.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    searchBtn.click();
+  }
 });
